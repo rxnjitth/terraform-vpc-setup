@@ -51,20 +51,16 @@ resource "aws_route_table_association" "public_assoc" {
 
 
 
-#rpivate route table
-resource "aws_route_table" "private_rt" {
-  vpc_id = aws_vpc.main.id
+#private route table - use the default VPC route table
+resource "aws_default_route_table" "private_rt" {
+  default_route_table_id = aws_vpc.main.default_route_table_id
 
     tags = {
         Name = "redhat-private-rt"
     }
 }
 
-#route table association for private subnet
-resource "aws_route_table_association" "private_assoc" {
-  subnet_id      = aws_subnet.private.id
-  route_table_id = aws_route_table.private_rt.id
-}
+# No explicit association needed for private subnet - it uses the default route table automatically
 
 #Internet Gateway
 resource "aws_internet_gateway" "igw" {
@@ -73,10 +69,4 @@ resource "aws_internet_gateway" "igw" {
     tags = {
         Name = "redhat-igw"
     }
-}
-
-#internet gateway attachment
-resource "aws_internet_gateway_attachment" "igw_attach" {
-  vpc_id             = aws_vpc.main.id
-  internet_gateway_id = aws_internet_gateway.igw.id
 }

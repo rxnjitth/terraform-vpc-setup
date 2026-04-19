@@ -5,6 +5,7 @@ A simple Terraform project to create an AWS VPC with public and private subnets,
 ## What Does This Do?
 
 This Terraform configuration creates:
+
 - **VPC** - A custom Virtual Private Cloud
 - **Public Subnet** - Internet-accessible subnet with a public EC2 instance
 - **Private Subnet** - Internal-only subnet with a private EC2 instance
